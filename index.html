@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Franz @18 — A Nostalgic Keepsake</title>
+    
+    <!-- Elegant Fonts: Cormorant Garamond (Serif), Poppins (Clean), and Alex Brush (Cute Script) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+
+    <style>
+        /* =========================================================
+           COLOR PALETTE & VARIABLES
+           ========================================================= */
+        :root {
+            /* The solid lavender background you requested */
+            --bg-lavender: #C2B4D6; 
+            /* The paper/card colors */
+            --paper-ivory: #FDFBF7;
+            --paper-white: #FFFFFF;
+            /* Accents and Text */
+            --text-dark: #3F3445;
+            --text-muted: #7A6A82;
+            --accent-purple: #9D84B4;
+        }
+
+        /* =========================================================
+           GLOBAL RESET
+           ========================================================= */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background-color: var(--bg-lavender);
+            color: var(--text-dark);
+            font-family: 'Poppins', sans-serif;
+            font-weight: 300;
+            line-height: 1.6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 2rem 1rem;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, .serif {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 500;
+        }
+
+        .script-text {
+            font-family: 'Alex Brush', cursive;
+            font-size: 2.2rem;
+            color: var(--accent-purple);
+            line-height: 1;
+        }
+
+        .tiny-caps {
+            font-size: 0.65rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+        }
+
+        /* =========================================================
+           THE KEEPSAKE "BOOK" / CARD CONTAINER
+           ========================================================= */
+        #invitation-container {
+            width: 100%;
+            max-width: 850px;
+            background-color: var(--paper-ivory);
+            /* Subtle paper shadow to make it pop off the lavender background */
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1), 0 5px 15px rgba(0,0,0,0.05);
+            position: relative;
+            min-height: 550px;
+            border-radius: 4px;
+            overflow: hidden;
+            /* Paper texture overlay */
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
+        }
+
+        /* Screens act like turning pages */
+        .page {
+            display: none;
+            padding: 4rem 3rem;
+            text-align: center;
+            animation: fadeIn 0.6s ease-out forwards;
+            height: 100%;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .page.active { display: flex; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.98) translateY(10px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        /* =========================================================
+           BUTTONS & NAVIGATION
+           ========================================================= */
+        button {
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        .btn-main {
+            display: inline-block;
+            margin-top: 2rem;
+            padding: 0.6rem 2rem;
+            border: 1px solid var(--accent-purple);
+            color: var(--text-dark);
+            font-size: 0.75rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+        }
+        .btn-main:hover {
+            background-color: var(--accent-purple);
+            color: var(--paper-white);
+        }
+
+        .btn-back {
+            margin-top: 3rem;
+            font-size: 0.7rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            border-bottom: 1px solid transparent;
+        }
+        .btn-back:hover {
+            color: var(--text-dark);
+            border-color: var(--text-dark);
+        }
+
+        /* =========================================================
+           SPECIFIC PAGES
+           ========================================================= */
+        
+        /* PAGE 1: COVER */
+        .cover-title {
+            font-size: clamp(3.5rem, 8vw, 5rem);
+            color: var(--accent-purple);
+            margin: 1rem 0 0.5rem 0;
+            line-height: 1;
+        }
+        .flower-img {
+            max-width: 180px;
+            height: auto;
+            margin: 1rem auto;
+            /* Placeholder styling if image is missing */
+            display: block;
+        }
+
+        /* PAGE 2: MENU */
+        .menu-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            width: 100%;
+            margin-top: 2rem;
+        }
+        .menu-item {
+            padding: 2rem 1.5rem;
+            border: 1px solid rgba(157, 132, 180, 0.2);
+            background: var(--paper-white);
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-align: left;
+            position: relative;
+        }
+        .menu-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            border-color: var(--accent-purple);
+        }
+        .menu-item-num {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.5rem;
+            color: var(--accent-purple);
+            margin-bottom: 0.5rem;
+            font-style: italic;
+        }
+        .menu-item-title {
+            font-size: 0.9rem;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        /* 18 ROSES LIST */
+        .roses-list {
+            text-align: left;
+            max-width: 450px;
+            margin: 2rem auto;
+            font-size: 0.9rem;
+        }
+        .roses-list .step {
+            margin-bottom: 1.5rem;
+        }
+        .step-num {
+            font-family: 'Cormorant Garamond', serif;
+            color: var(--accent-purple);
+            font-size: 1.2rem;
+            font-style: italic;
+            margin-right: 0.5rem;
+        }
+
+        /* RSVP QR */
+        .qr-image {
+            width: 200px;
+            height: 200px;
+            margin: 1.5rem auto;
+            display: block;
+            border: 5px solid var(--paper-white);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 600px) {
+            .menu-grid { grid-template-columns: 1fr; }
+            .page { padding: 3rem 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="invitation-container">
+        
+        <!-- ================= PAGE 1: COVER ================= -->
+        <div id="page-cover" class="page active">
+            <p class="tiny-caps">The Details</p>
+            <h1 class="cover-title">eighteen.</h1>
+            
+            <!-- Replace 'flower.png' with your actual flower image file name -->
+            <img src="flower.png" alt="Purple Iris Flower" class="flower-img" onerror="this.style.display='none'; this.insertAdjacentHTML('afterend', '<div style=\'height:150px; display:flex; align-items:center; justify-content:center; color:#9D84B4; font-style:italic;\'>[ Insert Solid Flower Image Here ]</div>');">
+            
+            <p class="script-text" style="margin-top: 1rem;">Open the story</p>
+            
+            <button class="btn-main" onclick="goTo('page-menu')">Enter &rarr;</button>
+        </div>
+
+        <!-- ================= PAGE 2: MENU ================= -->
+        <div id="page-menu" class="page">
+            <h2 class="script-text" style="margin-bottom: 0.5rem;">I'm keeping this one small.</h2>
+            <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 2rem;">Just the people I want to share it with.</p>
+            
+            <div class="menu-grid">
+                <div class="menu-item" onclick="goTo('page-when')">
+                    <div class="menu-item-num">01</div>
+                    <div class="menu-item-title">WHERE & WHEN</div>
+                    <p class="tiny-caps">The venue details</p>
+                </div>
+                <div class="menu-item" onclick="goTo('page-wear')">
+                    <div class="menu-item-num">02</div>
+                    <div class="menu-item-title">WHAT TO WEAR</div>
+                    <p class="tiny-caps">A note on attire</p>
+                </div>
+                <div class="menu-item" onclick="goTo('page-roses')">
+                    <div class="menu-item-num">03</div>
+                    <div class="menu-item-title">THE 18S</div>
+                    <p class="tiny-caps">For my 18 Roses</p>
+                </div>
+                <div class="menu-item" onclick="goTo('page-rsvp')">
+                    <div class="menu-item-num">04</div>
+                    <div class="menu-item-title">RSVP</div>
+                    <p class="tiny-caps">Let me know</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= PAGE 3: WHEN & WHERE ================= -->
+        <div id="page-when" class="page">
+            <p class="tiny-caps">01 / The Details</p>
+            <h2 class="serif" style="font-size: 2rem; margin: 1rem 0;">A Note About The Evening</h2>
+            
+            <div style="margin-top: 2rem;">
+                <p class="script-text" style="font-size: 1.8rem; margin-bottom: 0.5rem;">When</p>
+                <p>September 27, 2026<br>7:00 PM</p>
+            </div>
+            
+            <div style="margin-top: 2rem;">
+                <p class="script-text" style="font-size: 1.8rem; margin-bottom: 0.5rem;">Where</p>
+                <p class="serif" style="font-size: 1.3rem;">[INSERT VENUE NAME]</p>
+                <p style="font-size: 0.9rem; color: var(--text-muted);">[INSERT COMPLETE VENUE ADDRESS]</p>
+            </div>
+
+            <button class="btn-back" onclick="goTo('page-menu')">&larr; Back to Menu</button>
+        </div>
+
+        <!-- ================= PAGE 4: WHAT TO WEAR ================= -->
+        <div id="page-wear" class="page">
+            <p class="tiny-caps">02 / Dress Code</p>
+            <h2 class="serif" style="font-size: 2.5rem; margin: 1rem 0; color: var(--accent-purple);">white.</h2>
+            
+            <p style="margin-bottom: 1.5rem; font-weight: 500;">keep your main outfit white.</p>
+            
+            <div style="max-width: 400px; margin: 0 auto; font-size: 0.9rem; color: var(--text-muted);">
+                <p style="margin-bottom: 1rem; font-style: italic;">Formal or semi-formal attire is encouraged (e.g., white dress, long-sleeved shirt, or formal top).</p>
+                <p style="margin-bottom: 1rem;">Pants, skirts, shoes, and accessories may be any color — just keep white as the main focus.</p>
+                <p style="color: var(--accent-purple);">* Please do not use purple as your main outfit color.</p>
+            </div>
+
+            <div class="script-text" style="margin-top: 2rem; font-size: 1.5rem;">🤍</div>
+
+            <button class="btn-back" onclick="goTo('page-menu')">&larr; Back to Menu</button>
+        </div>
+
+        <!-- ================= PAGE 5: 18 ROSES ================= -->
+        <div id="page-roses" class="page">
+            <p class="tiny-caps">03 / A Special Note</p>
+            <h2 class="script-text" style="font-size: 2.5rem; margin: 1rem 0;">You're part of my 18 Roses,</h2>
+            <p style="font-size: 0.9rem; color: var(--text-muted);">and I’m really happy you’ll be sharing this moment with me.</p>
+            
+            <div class="roses-list">
+                <div class="step">
+                    <span class="step-num">01</span> <strong>PICK A SONG</strong><br>
+                    <span style="color: var(--text-muted);">one song that feels like us.</span>
+                </div>
+                <div class="step">
+                    <span class="step-num">02</span> <strong>TELL ME WHY</strong><br>
+                    <span style="color: var(--text-muted);">2–3 natural sentences. Sweet, funny, nostalgic — anything goes.</span>
+                </div>
+                <div class="step">
+                    <span class="step-num">03</span> <strong>SEND ME:</strong><br>
+                    <span style="color: var(--text-muted);">your name · Song + Artist · why you chose it</span>
+                </div>
+            </div>
+            
+            <p style="font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.2rem;">
+                I'll hear your message while we dance. 🤍
+            </p>
+
+            <button class="btn-back" onclick="goTo('page-menu')">&larr; Back to Menu</button>
+        </div>
+
+        <!-- ================= PAGE 6: RSVP ================= -->
+        <div id="page-rsvp" class="page">
+            <p class="tiny-caps">04 / One Last Thing</p>
+            <h2 class="serif" style="font-size: 2rem; margin: 1rem 0;">Will you be there?</h2>
+            
+            <p class="script-text" style="font-size: 1.8rem; margin-bottom: 1rem;">Let me know!</p>
+            
+            <!-- This calls the exact file name you provided -->
+            <img src="image_6a43c5.png" alt="RSVP QR Code" class="qr-image" onerror="this.style.display='none'; this.insertAdjacentHTML('afterend', '<div style=\'width:200px; height:200px; margin: 1.5rem auto; border: 1px solid #ccc; display:flex; align-items:center; justify-content:center;\'>[ QR CODE MISSING ]</div>');">
+            
+            <p class="tiny-caps">Scan to confirm</p>
+            
+            <button class="btn-back" onclick="goTo('page-menu')">&larr; Back to Menu</button>
+        </div>
+
+    </div>
+
+    <!-- =========================================================
+         JAVASCRIPT
+         ========================================================= -->
+    <script>
+        // Simple page transition function
+        function goTo(pageId) {
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(p => p.classList.remove('active'));
+            
+            const target = document.getElementById(pageId);
+            if(target) {
+                target.classList.add('active');
+                // Scroll to top of the card smoothly
+                document.getElementById('invitation-container').scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        }
+    </script>
+</body>
+</html>
