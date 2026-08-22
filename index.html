@@ -114,7 +114,12 @@
         /* Interactive Card */
         .interactive-card { border: 1px solid rgba(255,255,255,0.4); background: rgba(255,255,255,0.1); padding: 1.5rem; margin-top: 1.5rem; cursor: pointer; text-align: left; color: var(--white); border-radius: 8px; }
         .interactive-content { display: none; padding-top: 1.2rem; margin-top: 1.2rem; border-top: 1px solid rgba(255,255,255,0.3); }
-        .interactive-content.active { display: block; }
+        .interactive-content.active { display: block; animation: fadeIn 0.4s ease; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
     </style>
 </head>
 <body>
@@ -150,7 +155,8 @@
             <h2 class="script" style="color: var(--light-lavender); margin-bottom: 1.5rem;">Finally, 18! ✨</h2>
             
             <p class="sans detail-text">It feels crazy to think that 18 years have already passed. From little moments to big memories, every year has been part of the story that brought me here.</p>
-            <p class="sans detail-text">Now, a new part of my story begins—and I’d love to celebrate it with you.</p>
+            <!-- UPDATED TEXT HERE -->
+            <p class="sans detail-text">Now, a new season begins—and I’d love to celebrate it with you.</p>
             
             <p class="serif" style="font-size: 1.1rem; font-style: italic; color: var(--white); margin-top: 2rem; font-weight: bold;">Come celebrate, have fun,<br>and make a memory with me!</p>
             
@@ -217,13 +223,13 @@
             <h3 class="script" style="margin-bottom: 1rem; color: var(--light-lavender);">Oh, this one's for you.</h3>
             <p class="sans" style="font-size: 0.85rem; line-height: 1.6; margin-bottom: 1rem; color: var(--white);">You're part of my 18 Roses,<br>and I'm really happy you'll be<br>sharing this moment with me.</p>
             
-            <div class="rose-card" onclick="toggleRose()">
+            <div class="interactive-card" onclick="toggleRose()">
                 <div style="display: flex; justify-content: space-between; align-items: center;">
                     <span class="serif" style="font-size: 1.1rem;">INSTRUCTIONS</span>
                     <span class="sans" style="font-size: 0.55rem; text-transform: uppercase; letter-spacing: 0.1em;">Tap to Open</span>
                 </div>
                 
-                <div class="rose-content" id="roseContent">
+                <div class="interactive-content" id="roseContent">
                     <div style="margin-bottom: 1.2rem;">
                         <p class="sans" style="margin-bottom: 0.2rem; color: var(--light-lavender); font-weight: 500; text-transform: uppercase; font-size: 0.7rem;">01 Pick a song</p>
                         <p class="sans" style="font-size: 0.8rem; color: var(--white);">One song that feels like us.</p>
@@ -293,7 +299,7 @@
             content.classList.toggle('active');
         }
 
-        // Music Play/Pause Logic
+        // Music Play Logic
         let isPlaying = false;
         const bgMusic = document.getElementById('bgMusic');
 
