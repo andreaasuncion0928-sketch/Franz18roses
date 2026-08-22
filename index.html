@@ -4,11 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Franz — Eighteen</title>
-    <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Montserrat:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* Your Exact Hex Code */
-            --lavender: #ab85b8; 
+            --lavender: #ab85b8;
             --dark-lavender: #6d4b7a;
             --light-lavender: #cbb6d4;
             --ivory: #F9F8F6;
@@ -50,30 +49,28 @@
         .screen.active { opacity: 1; visibility: visible; z-index: 10; }
         .content-wrap { max-width: 500px; width: 100%; margin: auto; z-index: 1; position: relative; }
 
-        /* PURE CODE BACKGROUND: Nostalgic Soft-Focus Hydrangea Atmosphere */
+        /* BACKGROUND IMAGES SETUP */
         .bg-layer {
             position: fixed; top: -5%; left: -5%; width: 110%; height: 110%;
-            background-color: var(--ivory);
-            background-image: 
-                radial-gradient(circle at 15% 20%, rgba(171, 133, 184, 0.65) 0%, transparent 45%),
-                radial-gradient(circle at 85% 15%, rgba(109, 75, 122, 0.45) 0%, transparent 40%),
-                radial-gradient(circle at 50% 60%, rgba(171, 133, 184, 0.55) 0%, transparent 55%),
-                radial-gradient(circle at 20% 80%, rgba(203, 182, 212, 0.6) 0%, transparent 45%),
-                radial-gradient(circle at 80% 90%, rgba(171, 133, 184, 0.5) 0%, transparent 50%);
-            filter: blur(30px); /* Creates the soft, dreamy bokeh effect */
+            background-size: cover;
+            background-position: center;
             z-index: -2;
             transition: transform 10s ease-out;
         }
         .screen.active .bg-layer { transform: scale(1.05); }
         
-        /* Overlays to control contrast */
+        /* Assigning the specific images to the specific screens */
+        #cover .bg-layer, #menu .bg-layer {
+            background-image: url('explorethevening.jpg');
+        }
+        .screen:not(#cover):not(#menu) .bg-layer {
+            background-image: url('details.jpg');
+        }
+
+        /* Overlays */
         .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
-        
-        /* Dark Vintage Wash for Cover & Roses */
-        .overlay-dark { background: rgba(44, 44, 44, 0.65); mix-blend-mode: multiply; }
-        
-        /* Sheer Glass Wash for Detail Pages */
-        .overlay-light { background: rgba(249, 248, 246, 0.65); backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); }
+        .overlay-dark { background: rgba(44, 44, 44, 0.45); } /* Slightly lighter dark wash to let the stars shine */
+        .overlay-light { background: rgba(249, 248, 246, 0.75); backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); }
 
         /* Elegant Buttons */
         .btn-glass {
@@ -87,20 +84,20 @@
         .btn-glass:hover { background: rgba(255, 255, 255, 0.3); border-color: var(--white); }
         
         .btn-colored { border-color: var(--lavender); color: var(--lavender); background: transparent; backdrop-filter: none; }
-        .btn-colored:hover { background: var(--lavender); color: var(--charcoal); }
+        .btn-colored:hover { background: var(--lavender); color: var(--white); }
 
         /* Menu Elements */
-        .menu-list { display: flex; flex-direction: column; gap: 1.8rem; margin-top: 2rem; }
+        .menu-list { display: flex; flex-direction: column; gap: 1.5rem; margin-top: 2rem; }
         .menu-item { cursor: pointer; background: none; border: none; font-family: 'Playfair Display', serif; font-size: 1.4rem; color: var(--charcoal); transition: color 0.3s; }
         .menu-item:hover { color: var(--lavender); }
-        .menu-sub { display: block; font-family: 'Montserrat', sans-serif; font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--lavender); margin-top: 0.4rem; }
+        .menu-sub { display: block; font-family: 'Montserrat', sans-serif; font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--lavender); margin-top: 0.4rem; font-weight: 500; }
 
         /* Back Button - Fixed at top */
         .back-btn { position: fixed; top: 1.5rem; left: 50%; transform: translateX(-50%); background: none; border: none; cursor: pointer; font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; font-family: 'Montserrat', sans-serif; font-weight: 500; color: var(--charcoal); z-index: 50; }
         .back-btn.light { color: var(--white); }
 
         /* Detail Elements */
-        .detail-text { font-size: 1rem; line-height: 1.8; margin-bottom: 2rem; color: #444; }
+        .detail-text { font-size: 0.95rem; line-height: 1.8; margin-bottom: 1.5rem; color: #444; }
         .countdown-flex { display: flex; gap: 1.5rem; justify-content: center; margin-top: 1.5rem; }
         .cd-num { font-size: 2.2rem; line-height: 1; margin-bottom: 0.5rem; color: var(--lavender); }
         
@@ -114,20 +111,20 @@
 
     <div class="grain"></div>
 
-    <!-- 01 COVER SCREEN -->
+    <!-- 01 COVER SCREEN (Night Scene) -->
     <section id="cover" class="screen active">
         <div class="bg-layer"></div>
         <div class="overlay overlay-dark"></div>
         
-        <div class="content-wrap" style="color: var(--white);">
-            <h1 class="serif huge" style="margin-bottom: -0.5rem;">eighteen.</h1>
-            <h2 class="script" style="color: var(--light-lavender);">Franz</h2>
-            <p class="sans" style="margin-top: 2.5rem; margin-bottom: 1rem; letter-spacing: 0.1em; font-size: 0.85rem; text-transform: uppercase;">You are invited.</p>
+        <div class="content-wrap" style="color: var(--white); margin-top: 2rem;">
+            <h1 class="serif huge" style="margin-bottom: -0.5rem; text-shadow: 0 4px 20px rgba(0,0,0,0.4);">eighteen.</h1>
+            <h2 class="script" style="color: var(--light-lavender); text-shadow: 0 4px 20px rgba(0,0,0,0.4);">Franz</h2>
+            <p class="sans" style="margin-top: 2.5rem; margin-bottom: 1rem; letter-spacing: 0.1em; font-size: 0.85rem; text-transform: uppercase; text-shadow: 0 2px 10px rgba(0,0,0,0.5);">You are invited.</p>
             <button class="btn-glass" onclick="nav('menu')">Enter &rarr;</button>
         </div>
     </section>
 
-    <!-- 02 MAIN MENU -->
+    <!-- 02 MAIN MENU (Night Scene, Light Glass Overlay for readability) -->
     <section id="menu" class="screen">
         <div class="bg-layer"></div>
         <div class="overlay overlay-light"></div>
@@ -138,6 +135,7 @@
             <p class="sans detail-text" style="margin-top: 1rem; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em;">Explore the evening</p>
             
             <div class="menu-list">
+                <button class="menu-item" onclick="nav('welcome')">WELCOME<span class="menu-sub">A little note</span></button>
                 <button class="menu-item" onclick="nav('evening')">THE EVENING<span class="menu-sub">When & Where</span></button>
                 <button class="menu-item" onclick="nav('dress-code')">DRESS CODE<span class="menu-sub">What to wear</span></button>
                 <button class="menu-item" onclick="nav('roses')">18 ROSES<span class="menu-sub">Oh, this one's for you</span></button>
@@ -147,7 +145,21 @@
         </div>
     </section>
 
-    <!-- 03 THE EVENING -->
+    <!-- 03 WELCOME NOTE (Daytime Scene) -->
+    <section id="welcome" class="screen">
+        <div class="bg-layer"></div>
+        <div class="overlay overlay-light"></div>
+        <button class="back-btn" onclick="nav('menu')">&larr; Menu</button>
+        
+        <div class="content-wrap">
+            <h2 class="script" style="color: var(--lavender); margin-bottom: 2rem;">Finally, 18! ✨</h2>
+            <p class="sans detail-text">It feels crazy to think that 18 years have already passed. From little moments to big memories, every year has been part of the story that brought me here.</p>
+            <p class="sans detail-text">Now, a new part of my story begins—and I’d love to celebrate it with you.</p>
+            <p class="serif" style="font-size: 1.25rem; font-style: italic; color: var(--charcoal); margin-top: 2rem;">Come celebrate, have fun,<br>and make a memory with me!</p>
+        </div>
+    </section>
+
+    <!-- 04 THE EVENING (Daytime Scene) -->
     <section id="evening" class="screen">
         <div class="bg-layer"></div>
         <div class="overlay overlay-light"></div>
@@ -161,7 +173,7 @@
         </div>
     </section>
 
-    <!-- 04 DRESS CODE -->
+    <!-- 05 DRESS CODE (Daytime Scene) -->
     <section id="dress-code" class="screen">
         <div class="bg-layer"></div>
         <div class="overlay overlay-light"></div>
@@ -176,7 +188,7 @@
         </div>
     </section>
 
-    <!-- 05 18 ROSES -->
+    <!-- 06 18 ROSES (Daytime Scene, Dark Overlay for a twilight feel) -->
     <section id="roses" class="screen">
         <div class="bg-layer"></div>
         <div class="overlay overlay-dark"></div>
@@ -218,7 +230,7 @@
         </div>
     </section>
 
-    <!-- 06 COUNTDOWN -->
+    <!-- 07 COUNTDOWN (Daytime Scene) -->
     <section id="countdown" class="screen">
         <div class="bg-layer"></div>
         <div class="overlay overlay-light"></div>
@@ -235,7 +247,7 @@
         </div>
     </section>
 
-    <!-- 07 RSVP -->
+    <!-- 08 RSVP (Daytime Scene) -->
     <section id="rsvp" class="screen">
         <div class="bg-layer"></div>
         <div class="overlay overlay-light"></div>
