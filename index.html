@@ -49,9 +49,9 @@
         .screen.active { opacity: 1; visibility: visible; z-index: 10; }
         .content-wrap { max-width: 500px; width: 100%; margin: auto; z-index: 1; position: relative; }
 
-        /* Elegant Content Boxes (Replaces the full-screen blur/wash) */
+        /* Elegant Content Boxes */
         .content-box-light {
-            background: rgba(249, 248, 246, 0.92); /* Highly readable ivory box */
+            background: rgba(255, 255, 255, 0.95); /* Pure white background for maximum readability */
             padding: 3.5rem 2rem;
             border-radius: 16px;
             box-shadow: 0 10px 40px rgba(0,0,0,0.15);
@@ -83,8 +83,12 @@
             background-image: url('details.jpg');
         }
 
+        /* OVERLAYS */
         /* Subtle dark gradient just for the Cover so the huge white text pops */
         .cover-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle, transparent 20%, rgba(0,0,0,0.4) 100%); z-index: -1; pointer-events: none; }
+        
+        /* New 60% Overlay for the Detail Pages */
+        .overlay-60 { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.6); z-index: -1; pointer-events: none; }
 
         /* Elegant Buttons */
         .btn-glass {
@@ -134,14 +138,14 @@
             <h1 class="serif huge" style="margin-bottom: -0.5rem; text-shadow: 0 4px 20px rgba(0,0,0,0.5);">eighteen.</h1>
             <h2 class="script" style="color: var(--light-lavender); text-shadow: 0 4px 20px rgba(0,0,0,0.5);">Franz</h2>
             <p class="sans" style="margin-top: 2.5rem; margin-bottom: 1rem; letter-spacing: 0.1em; font-size: 0.85rem; text-transform: uppercase; text-shadow: 0 2px 10px rgba(0,0,0,0.5);">You are invited.</p>
-            <!-- FLOW UPDATE 1: Enters directly to the Welcome message -->
             <button class="btn-glass" onclick="nav('welcome')">Enter &rarr;</button>
         </div>
     </section>
 
-    <!-- 02 WELCOME NOTE (Daytime Scene with Glass Box) -->
+    <!-- 02 WELCOME NOTE -->
     <section id="welcome" class="screen">
         <div class="bg-layer"></div>
+        <div class="overlay-60"></div> <!-- 60% Overlay added here -->
         
         <div class="content-wrap content-box-light">
             <h2 class="script" style="color: var(--lavender); margin-bottom: 2rem;">Finally, 18! ✨</h2>
@@ -149,14 +153,14 @@
             <p class="sans detail-text">Now, a new part of my story begins—and I’d love to celebrate it with you.</p>
             <p class="serif" style="font-size: 1.25rem; font-style: italic; color: var(--charcoal); margin-top: 2rem;">Come celebrate, have fun,<br>and make a memory with me!</p>
             
-            <!-- FLOW UPDATE 2: Continue button opens the menu -->
             <button class="btn-glass btn-colored" style="margin-top: 3rem;" onclick="nav('menu')">Continue &rarr;</button>
         </div>
     </section>
 
-    <!-- 03 MAIN MENU (Night Scene with Glass Box) -->
+    <!-- 03 MAIN MENU -->
     <section id="menu" class="screen">
         <div class="bg-layer"></div>
+        <div class="overlay-60"></div> <!-- 60% Overlay added here -->
         
         <div class="content-wrap content-box-light">
             <h2 class="serif" style="font-size: 2.5rem; color: var(--charcoal);">eighteen.</h2>
@@ -164,7 +168,6 @@
             <p class="sans detail-text" style="margin-top: 1rem; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0;">Explore the evening</p>
             
             <div class="menu-list">
-                <!-- FLOW UPDATE 3: Welcome is removed from here since they already saw it -->
                 <button class="menu-item" onclick="nav('evening')">THE EVENING<span class="menu-sub">When & Where</span></button>
                 <button class="menu-item" onclick="nav('dress-code')">DRESS CODE<span class="menu-sub">What to wear</span></button>
                 <button class="menu-item" onclick="nav('roses')">18 ROSES<span class="menu-sub">Oh, this one's for you</span></button>
@@ -177,6 +180,7 @@
     <!-- 04 THE EVENING -->
     <section id="evening" class="screen">
         <div class="bg-layer"></div>
+        <div class="overlay-60"></div> <!-- 60% Overlay added here -->
         <button class="back-btn" onclick="nav('menu')">&larr; Menu</button>
         
         <div class="content-wrap content-box-light">
@@ -190,6 +194,7 @@
     <!-- 05 DRESS CODE -->
     <section id="dress-code" class="screen">
         <div class="bg-layer"></div>
+        <div class="overlay-60"></div> <!-- 60% Overlay added here -->
         <button class="back-btn" onclick="nav('menu')">&larr; Menu</button>
 
         <div class="content-wrap content-box-light">
@@ -201,9 +206,10 @@
         </div>
     </section>
 
-    <!-- 06 18 ROSES (Dark Box to match Night Scene) -->
+    <!-- 06 18 ROSES -->
     <section id="roses" class="screen">
         <div class="bg-layer"></div>
+        <div class="overlay-60"></div> <!-- 60% Overlay added here -->
         <button class="back-btn" onclick="nav('menu')">&larr; Menu</button>
 
         <div class="content-wrap content-box-dark">
@@ -245,6 +251,7 @@
     <!-- 07 COUNTDOWN -->
     <section id="countdown" class="screen">
         <div class="bg-layer"></div>
+        <div class="overlay-60"></div> <!-- 60% Overlay added here -->
         <button class="back-btn" onclick="nav('menu')">&larr; Menu</button>
 
         <div class="content-wrap content-box-light">
@@ -261,6 +268,7 @@
     <!-- 08 RSVP -->
     <section id="rsvp" class="screen">
         <div class="bg-layer"></div>
+        <div class="overlay-60"></div> <!-- 60% Overlay added here -->
         <button class="back-btn" onclick="nav('menu')">&larr; Menu</button>
 
         <div class="content-wrap content-box-light">
