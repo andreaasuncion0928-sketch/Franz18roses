@@ -18,7 +18,7 @@
         body {
             font-family: 'Montserrat', sans-serif;
             background-color: var(--charcoal);
-            color: var(--charcoal);
+            color: var(--white);
             overflow: hidden; 
             position: fixed;
             width: 100%;
@@ -37,7 +37,7 @@
         .script { font-family: 'Alex Brush', cursive; font-size: clamp(3.5rem, 12vw, 4.5rem); line-height: 1; }
         .sans { font-family: 'Montserrat', sans-serif; font-weight: 300; }
         .huge { font-size: clamp(3.5rem, 14vw, 6rem); line-height: 1; letter-spacing: -0.02em; }
-        .label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.2em; color: var(--lavender); margin-bottom: 1.5rem; font-weight: 500; }
+        .label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.2em; color: var(--light-lavender); margin-bottom: 1.5rem; font-weight: 500; }
 
         /* Screen Layout - Optimized for Mobile */
         .screen {
@@ -53,22 +53,18 @@
         .screen.active { opacity: 1; visibility: visible; z-index: 10; }
         .content-wrap { max-width: 500px; width: 100%; margin: auto; z-index: 1; position: relative; }
 
-        /* Transparent Content Boxes */
-        .content-box-light {
-            background: rgba(255, 255, 255, 0.6); /* Adjusted to exactly 60% transparency */
+        /* Transparent Content Boxes - 20% Opacity (Highly See-Through) */
+        .content-box-light, .content-box-dark {
+            background: rgba(255, 255, 255, 0.2); 
             padding: 3rem 1.5rem;
             border-radius: 16px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
-        }
-        .content-box-dark {
-            background: rgba(44, 44, 44, 0.6); /* Adjusted to match transparency logic */
-            padding: 3rem 1.5rem;
-            border-radius: 16px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
             color: var(--white);
+            backdrop-filter: blur(4px); /* Very slight blur just to help text readability */
+            -webkit-backdrop-filter: blur(4px);
         }
 
-        /* BACKGROUND IMAGES SETUP - Mobile Optimized */
+        /* BACKGROUND IMAGES SETUP - ALL screens now use explorethevening.jpg */
         .bg-layer {
             position: fixed; top: 0; left: 0; 
             width: 100vw; 
@@ -77,22 +73,16 @@
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
+            background-image: url('explorethevening.jpg');
             z-index: -2;
             transform: scale(1);
             transition: transform 10s ease-out;
         }
         .screen.active .bg-layer { transform: scale(1.08); } 
-        
-        /* Image Assignments */
-        #cover .bg-layer, #menu .bg-layer, #roses .bg-layer {
-            background-image: url('explorethevening.jpg');
-        }
-        #welcome .bg-layer, #evening .bg-layer, #dress-code .bg-layer, #countdown .bg-layer, #rsvp .bg-layer {
-            background-image: url('details.jpg');
-        }
 
         /* OVERLAYS */
-        .cover-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle, transparent 20%, rgba(0,0,0,0.4) 100%); z-index: -1; pointer-events: none; }
+        .cover-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle, transparent 20%, rgba(0,0,0,0.5) 100%); z-index: -1; pointer-events: none; }
+        /* 60% overlay for details to make sure text is readable over the bright lanterns */
         .overlay-60 { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.6); z-index: -1; pointer-events: none; }
 
         /* Elegant Buttons */
@@ -105,21 +95,22 @@
             text-decoration: none; cursor: pointer; transition: all 0.3s ease;
         }
         .btn-glass:hover { background: rgba(255, 255, 255, 0.3); border-color: var(--white); }
-        .btn-colored { border-color: var(--lavender); color: var(--lavender); background: transparent; backdrop-filter: none; }
-        .btn-colored:hover { background: var(--lavender); color: var(--white); }
+        .btn-colored { border-color: var(--light-lavender); color: var(--white); background: rgba(171, 133, 184, 0.4); }
+        .btn-colored:hover { background: rgba(171, 133, 184, 0.7); }
 
         /* Menu Elements */
         .menu-list { display: flex; flex-direction: column; gap: 1.2rem; margin-top: 1.5rem; }
-        .menu-item { cursor: pointer; background: none; border: none; font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--charcoal); }
-        .menu-sub { display: block; font-family: 'Montserrat', sans-serif; font-size: 0.55rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--lavender); margin-top: 0.3rem; font-weight: 500; }
+        .menu-item { cursor: pointer; background: none; border: none; font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--white); }
+        .menu-item:hover { color: var(--light-lavender); }
+        .menu-sub { display: block; font-family: 'Montserrat', sans-serif; font-size: 0.55rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--light-lavender); margin-top: 0.3rem; font-weight: 500; }
 
-        /* Back Button - Mobile optimized placement */
-        .back-btn { position: fixed; top: 1rem; left: 50%; transform: translateX(-50%); background: rgba(255,255,255,0.85); border: none; cursor: pointer; font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; font-family: 'Montserrat', sans-serif; font-weight: 500; color: var(--charcoal); padding: 8px 16px; border-radius: 20px; z-index: 50; }
+        /* Back Button */
+        .back-btn { position: fixed; top: 1rem; left: 50%; transform: translateX(-50%); background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.3); cursor: pointer; font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; font-family: 'Montserrat', sans-serif; font-weight: 500; color: var(--white); padding: 8px 16px; border-radius: 20px; z-index: 50; backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); }
 
         /* Detail Elements */
-        .detail-text { font-size: 0.9rem; line-height: 1.7; margin-bottom: 1.2rem; color: #1a1a1a; font-weight: 500; }
+        .detail-text { font-size: 0.9rem; line-height: 1.7; margin-bottom: 1.2rem; color: rgba(255,255,255,0.9); font-weight: 400; }
         .countdown-flex { display: flex; gap: 1.2rem; justify-content: center; margin-top: 1.5rem; }
-        .cd-num { font-size: 2rem; line-height: 1; margin-bottom: 0.5rem; color: var(--lavender); }
+        .cd-num { font-size: 2rem; line-height: 1; margin-bottom: 0.5rem; color: var(--light-lavender); }
         
         /* 18 Roses Card */
         .rose-card { border: 1px solid rgba(255,255,255,0.4); background: rgba(255,255,255,0.1); padding: 1.5rem; margin-top: 1.5rem; cursor: pointer; text-align: left; color: var(--white); border-radius: 8px; }
@@ -137,9 +128,9 @@
         <div class="cover-overlay"></div>
         
         <div class="content-wrap" style="color: var(--white);">
-            <h1 class="serif huge" style="margin-bottom: -0.5rem; text-shadow: 0 4px 20px rgba(0,0,0,0.5);">eighteen.</h1>
-            <h2 class="script" style="color: var(--light-lavender); text-shadow: 0 4px 20px rgba(0,0,0,0.5);">Franz</h2>
-            <p class="sans" style="margin-top: 2rem; margin-bottom: 1rem; letter-spacing: 0.1em; font-size: 0.8rem; text-transform: uppercase; text-shadow: 0 2px 10px rgba(0,0,0,0.5);">You are invited.</p>
+            <h1 class="serif huge" style="margin-bottom: -0.5rem; text-shadow: 0 4px 20px rgba(0,0,0,0.7);">eighteen.</h1>
+            <h2 class="script" style="color: var(--light-lavender); text-shadow: 0 4px 20px rgba(0,0,0,0.7);">Franz</h2>
+            <p class="sans" style="margin-top: 2rem; margin-bottom: 1rem; letter-spacing: 0.1em; font-size: 0.8rem; text-transform: uppercase; text-shadow: 0 2px 10px rgba(0,0,0,0.7);">You are invited.</p>
             <button class="btn-glass" onclick="nav('welcome')">Enter &rarr;</button>
         </div>
     </section>
@@ -150,10 +141,10 @@
         <div class="overlay-60"></div>
         
         <div class="content-wrap content-box-light">
-            <h2 class="script" style="color: var(--lavender); margin-bottom: 1.5rem;">Finally, 18! ✨</h2>
+            <h2 class="script" style="color: var(--light-lavender); margin-bottom: 1.5rem;">Finally, 18! ✨</h2>
             <p class="sans detail-text">It feels crazy to think that 18 years have already passed. From little moments to big memories, every year has been part of the story that brought me here.</p>
             <p class="sans detail-text">Now, a new part of my story begins—and I’d love to celebrate it with you.</p>
-            <p class="serif" style="font-size: 1.1rem; font-style: italic; color: var(--charcoal); margin-top: 1.5rem; font-weight: bold;">Come celebrate, have fun,<br>and make a memory with me!</p>
+            <p class="serif" style="font-size: 1.1rem; font-style: italic; color: var(--white); margin-top: 1.5rem; font-weight: bold;">Come celebrate, have fun,<br>and make a memory with me!</p>
             
             <button class="btn-glass btn-colored" style="margin-top: 2rem;" onclick="nav('menu')">Continue &rarr;</button>
         </div>
@@ -165,8 +156,8 @@
         <div class="overlay-60"></div>
         
         <div class="content-wrap content-box-light">
-            <h2 class="serif" style="font-size: 2.2rem; color: var(--charcoal);">eighteen.</h2>
-            <h3 class="script" style="color: var(--lavender); margin-top: -8px;">Franz</h3>
+            <h2 class="serif" style="font-size: 2.2rem; color: var(--white);">eighteen.</h2>
+            <h3 class="script" style="color: var(--light-lavender); margin-top: -8px;">Franz</h3>
             <p class="sans detail-text" style="margin-top: 0.5rem; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0;">Explore the evening</p>
             
             <div class="menu-list">
@@ -187,7 +178,7 @@
         
         <div class="content-wrap content-box-light">
             <p class="label">The Evening</p>
-            <h2 class="serif" style="font-size: 2.2rem; margin-bottom: 1rem; color: var(--lavender);">September 27, 2026<br>6:00 PM</h2>
+            <h2 class="serif" style="font-size: 2.2rem; margin-bottom: 1rem; color: var(--white);">September 27, 2026<br>6:00 PM</h2>
             <p class="sans detail-text">The Felicidad Mansion<br>#2 Baler Street corner Roosevelt Ave<br>San Francisco del Monte, Quezon City</p>
             <a href="https://www.google.com/maps/search/The+Felicidad+Mansion,+2+Baler+St,+Quezon+City/" target="_blank" class="btn-glass btn-colored">View Location &rarr;</a>
         </div>
@@ -201,10 +192,10 @@
 
         <div class="content-wrap content-box-light">
             <p class="label">Dress Code</p>
-            <h2 class="serif huge" style="margin-bottom: 0.5rem; color: var(--lavender);">WHITE.</h2>
-            <p class="serif" style="font-size: 1.3rem; font-style: italic; margin-bottom: 1.5rem; color: var(--charcoal);">Formal / Semi-formal</p>
+            <h2 class="serif huge" style="margin-bottom: 0.5rem; color: var(--white);">WHITE.</h2>
+            <p class="serif" style="font-size: 1.3rem; font-style: italic; margin-bottom: 1.5rem; color: var(--light-lavender);">Formal / Semi-formal</p>
             <p class="sans detail-text">Keep your main outfit white.<br>Pants, skirts, shoes and accessories may be any color.</p>
-            <p class="sans" style="margin-top: 1.5rem; font-size: 0.75rem; color: #444; font-weight: 500;">Please avoid purple, lavender and violet as the main outfit color.</p>
+            <p class="sans" style="margin-top: 1.5rem; font-size: 0.75rem; color: rgba(255,255,255,0.7); font-weight: 500;">Please avoid purple, lavender and violet as the main outfit color.</p>
         </div>
     </section>
 
@@ -240,7 +231,7 @@
                         <p class="sans" style="font-size: 0.8rem; line-height: 1.6; color: var(--white);">Your name &middot; Song + Artist &middot; Why you chose it<br><br>Please send this to me via Messenger.</p>
                     </div>
 
-                    <p class="serif" style="font-style: italic; font-size: 1rem; margin-top: 2rem; margin-bottom: 1rem; text-align: center; color: var(--white);">I'll hear your message while we dance. 🤍</p>
+                    <p class="serif" style="font-style: italic; font-size: 1rem; margin-top: 2rem; margin-bottom: 0.5rem; text-align: center; color: var(--white);">I'll hear your message while we dance. 🤍</p>
                 </div>
             </div>
         </div>
@@ -255,10 +246,10 @@
         <div class="content-wrap content-box-light">
             <p class="label">Until the Night</p>
             <div class="countdown-flex">
-                <div><div class="serif cd-num" id="days">00</div><div class="sans" style="font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--charcoal);">Days</div></div>
-                <div><div class="serif cd-num" id="hours">00</div><div class="sans" style="font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--charcoal);">Hours</div></div>
-                <div><div class="serif cd-num" id="mins">00</div><div class="sans" style="font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--charcoal);">Mins</div></div>
-                <div><div class="serif cd-num" id="secs">00</div><div class="sans" style="font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--charcoal);">Secs</div></div>
+                <div><div class="serif cd-num" id="days">00</div><div class="sans" style="font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--white);">Days</div></div>
+                <div><div class="serif cd-num" id="hours">00</div><div class="sans" style="font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--white);">Hours</div></div>
+                <div><div class="serif cd-num" id="mins">00</div><div class="sans" style="font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--white);">Mins</div></div>
+                <div><div class="serif cd-num" id="secs">00</div><div class="sans" style="font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--white);">Secs</div></div>
             </div>
         </div>
     </section>
@@ -270,13 +261,13 @@
         <button class="back-btn" onclick="nav('menu')">&larr; Menu</button>
 
         <div class="content-wrap content-box-light">
-            <h2 class="serif" style="font-size: 2.2rem; margin-bottom: 1rem; color: var(--lavender);">Will you be there?</h2>
+            <h2 class="serif" style="font-size: 2.2rem; margin-bottom: 1rem; color: var(--white);">Will you be there?</h2>
             <p class="sans detail-text">Please confirm your attendance<br>by scanning below before Sept 10.</p>
             
-            <img src="rsvp-qr.png" alt="Scan to RSVP" style="width: 140px; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); margin-bottom: 2.5rem;">
+            <img src="rsvp-qr.png" alt="Scan to RSVP" style="width: 140px; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); margin-bottom: 2.5rem;">
             
-            <h3 class="script" style="color: var(--charcoal);">See you there.</h3>
-            <p class="serif" style="font-size: 1.1rem; margin-top: 0.3rem; color: var(--lavender);">Franz</p>
+            <h3 class="script" style="color: var(--light-lavender);">See you there.</h3>
+            <p class="serif" style="font-size: 1.1rem; margin-top: 0.3rem; color: var(--white);">Franz</p>
         </div>
     </section>
 
