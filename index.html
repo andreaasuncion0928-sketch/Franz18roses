@@ -53,18 +53,18 @@
         .screen.active { opacity: 1; visibility: visible; z-index: 10; }
         .content-wrap { max-width: 500px; width: 100%; margin: auto; z-index: 1; position: relative; }
 
-        /* Transparent Content Boxes - 20% Opacity (Highly See-Through) */
+        /* Transparent Content Boxes - 20% Opacity */
         .content-box-light, .content-box-dark {
             background: rgba(255, 255, 255, 0.2); 
             padding: 3rem 1.5rem;
             border-radius: 16px;
             box-shadow: 0 10px 40px rgba(0,0,0,0.3);
             color: var(--white);
-            backdrop-filter: blur(4px); /* Very slight blur just to help text readability */
+            backdrop-filter: blur(4px); 
             -webkit-backdrop-filter: blur(4px);
         }
 
-        /* BACKGROUND IMAGES SETUP - ALL screens now use explorethevening.jpg */
+        /* BACKGROUND IMAGES SETUP */
         .bg-layer {
             position: fixed; top: 0; left: 0; 
             width: 100vw; 
@@ -82,7 +82,6 @@
 
         /* OVERLAYS */
         .cover-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle, transparent 20%, rgba(0,0,0,0.5) 100%); z-index: -1; pointer-events: none; }
-        /* 60% overlay for details to make sure text is readable over the bright lanterns */
         .overlay-60 { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.6); z-index: -1; pointer-events: none; }
 
         /* Elegant Buttons */
@@ -97,6 +96,9 @@
         .btn-glass:hover { background: rgba(255, 255, 255, 0.3); border-color: var(--white); }
         .btn-colored { border-color: var(--light-lavender); color: var(--white); background: rgba(171, 133, 184, 0.4); }
         .btn-colored:hover { background: rgba(171, 133, 184, 0.7); }
+
+        /* Music Button Specific Tweaks */
+        .btn-music { padding: 8px 20px; font-size: 0.6rem; text-transform: none; letter-spacing: 0.1em; margin-top: 1rem; border-color: rgba(255,255,255,0.3); }
 
         /* Menu Elements */
         .menu-list { display: flex; flex-direction: column; gap: 1.2rem; margin-top: 1.5rem; }
@@ -122,6 +124,12 @@
 
     <div class="grain"></div>
 
+    <!-- Hidden Audio Player -->
+    <audio id="bgMusic" loop>
+        <!-- The file must be named song.mp3 in your GitHub folder -->
+        <source src="song.mp3" type="audio/mpeg">
+    </audio>
+
     <!-- 01 COVER SCREEN -->
     <section id="cover" class="screen active">
         <div class="bg-layer"></div>
@@ -135,18 +143,23 @@
         </div>
     </section>
 
-    <!-- 02 WELCOME NOTE -->
+    <!-- 02 WELCOME NOTE & MUSIC BUTTON -->
     <section id="welcome" class="screen">
         <div class="bg-layer"></div>
         <div class="overlay-60"></div>
         
         <div class="content-wrap content-box-light">
             <h2 class="script" style="color: var(--light-lavender); margin-bottom: 1.5rem;">Finally, 18! ✨</h2>
+            
             <p class="sans detail-text">It feels crazy to think that 18 years have already passed. From little moments to big memories, every year has been part of the story that brought me here.</p>
             <p class="sans detail-text">Now, a new part of my story begins—and I’d love to celebrate it with you.</p>
+            
+            <!-- Music Player Button -->
+            <button id="musicBtn" class="btn-glass btn-music" onclick="toggleMusic()">🎵 Play my favorite song</button>
+            
             <p class="serif" style="font-size: 1.1rem; font-style: italic; color: var(--white); margin-top: 1.5rem; font-weight: bold;">Come celebrate, have fun,<br>and make a memory with me!</p>
             
-            <button class="btn-glass btn-colored" style="margin-top: 2rem;" onclick="nav('menu')">Continue &rarr;</button>
+            <button class="btn-glass btn-colored" style="margin-top: 1.5rem;" onclick="nav('menu')">Continue &rarr;</button>
         </div>
     </section>
 
@@ -285,6 +298,23 @@
             content.classList.toggle('active');
         }
 
+        // Music Play/Pause Logic
+        let isPlaying = false;
+        const bgMusic = document.getElementById('bgMusic');
+        const musicBtn = document.getElementById('musicBtn');
+
+        function toggleMusic() {
+            if (isPlaying) {
+                bgMusic.pause();
+                musicBtn.innerHTML = "🎵 Play my favorite song";
+            } else {
+                bgMusic.play();
+                musicBtn.innerHTML = "⏸ Pause song";
+            }
+            isPlaying = !isPlaying;
+        }
+
+        // Countdown Logic
         const targetDate = new Date('September 27, 2026 18:00:00').getTime();
         
         setInterval(() => {
