@@ -42,12 +42,27 @@
         /* Screen Layout */
         .screen {
             position: absolute; top: 0; left: 0; width: 100vw; height: 100vh;
-            display: flex; flex-direction: column;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
             opacity: 0; visibility: hidden; transition: opacity 0.8s ease, visibility 0.8s ease;
-            text-align: center; overflow-y: auto; padding: 5rem 1.5rem 3rem 1.5rem;
+            text-align: center; overflow-y: auto; padding: 2rem 1.5rem;
         }
         .screen.active { opacity: 1; visibility: visible; z-index: 10; }
         .content-wrap { max-width: 500px; width: 100%; margin: auto; z-index: 1; position: relative; }
+
+        /* Elegant Content Boxes (Replaces the full-screen blur/wash) */
+        .content-box-light {
+            background: rgba(249, 248, 246, 0.92); /* Highly readable ivory box */
+            padding: 3.5rem 2rem;
+            border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+        }
+        .content-box-dark {
+            background: rgba(44, 44, 44, 0.85); /* Romantic dark box for Roses */
+            padding: 3.5rem 2rem;
+            border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+            color: var(--white);
+        }
 
         /* BACKGROUND IMAGES SETUP */
         .bg-layer {
@@ -59,18 +74,17 @@
         }
         .screen.active .bg-layer { transform: scale(1.05); }
         
-        /* Assigning the specific images to the specific screens */
-        #cover .bg-layer, #menu .bg-layer {
+        /* Night Image for Cover, Menu, and Roses */
+        #cover .bg-layer, #menu .bg-layer, #roses .bg-layer {
             background-image: url('explorethevening.jpg');
         }
-        .screen:not(#cover):not(#menu) .bg-layer {
+        /* Day Image for Details */
+        #welcome .bg-layer, #evening .bg-layer, #dress-code .bg-layer, #countdown .bg-layer, #rsvp .bg-layer {
             background-image: url('details.jpg');
         }
 
-        /* Overlays */
-        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
-        .overlay-dark { background: rgba(44, 44, 44, 0.45); } 
-        .overlay-light { background: rgba(249, 248, 246, 0.85); }
+        /* Subtle dark gradient just for the Cover so the huge white text pops */
+        .cover-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle, transparent 20%, rgba(0,0,0,0.4) 100%); z-index: -1; pointer-events: none; }
 
         /* Elegant Buttons */
         .btn-glass {
@@ -93,8 +107,8 @@
         .menu-sub { display: block; font-family: 'Montserrat', sans-serif; font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--lavender); margin-top: 0.4rem; font-weight: 500; }
 
         /* Back Button - Fixed at top */
-        .back-btn { position: fixed; top: 1.5rem; left: 50%; transform: translateX(-50%); background: none; border: none; cursor: pointer; font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; font-family: 'Montserrat', sans-serif; font-weight: 500; color: var(--charcoal); z-index: 50; }
-        .back-btn.light { color: var(--white); }
+        .back-btn { position: fixed; top: 1.5rem; left: 50%; transform: translateX(-50%); background: rgba(255,255,255,0.8); border: none; cursor: pointer; font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; font-family: 'Montserrat', sans-serif; font-weight: 500; color: var(--charcoal); padding: 8px 16px; border-radius: 20px; z-index: 50; }
+        .back-btn:hover { background: var(--white); }
 
         /* Detail Elements */
         .detail-text { font-size: 0.95rem; line-height: 1.8; margin-bottom: 1.5rem; color: #444; }
@@ -102,7 +116,7 @@
         .cd-num { font-size: 2.2rem; line-height: 1; margin-bottom: 0.5rem; color: var(--lavender); }
         
         /* 18 Roses Card */
-        .rose-card { border: 1px solid rgba(255,255,255,0.4); background: rgba(255,255,255,0.15); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); padding: 1.8rem; margin-top: 2rem; cursor: pointer; text-align: left; color: var(--white); border-radius: 4px; }
+        .rose-card { border: 1px solid rgba(255,255,255,0.4); background: rgba(255,255,255,0.1); padding: 1.8rem; margin-top: 2rem; cursor: pointer; text-align: left; color: var(--white); border-radius: 4px; }
         .rose-content { display: none; padding-top: 1.5rem; margin-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.3); }
         .rose-content.active { display: block; }
     </style>
@@ -111,49 +125,46 @@
 
     <div class="grain"></div>
 
-    <!-- 01 COVER SCREEN (Night Scene) -->
+    <!-- 01 COVER SCREEN -->
     <section id="cover" class="screen active">
         <div class="bg-layer"></div>
-        <div class="overlay overlay-dark"></div>
+        <div class="cover-overlay"></div>
         
-        <div class="content-wrap" style="color: var(--white); margin-top: 2rem;">
-            <h1 class="serif huge" style="margin-bottom: -0.5rem; text-shadow: 0 4px 20px rgba(0,0,0,0.4);">eighteen.</h1>
-            <h2 class="script" style="color: var(--light-lavender); text-shadow: 0 4px 20px rgba(0,0,0,0.4);">Franz</h2>
+        <div class="content-wrap" style="color: var(--white);">
+            <h1 class="serif huge" style="margin-bottom: -0.5rem; text-shadow: 0 4px 20px rgba(0,0,0,0.5);">eighteen.</h1>
+            <h2 class="script" style="color: var(--light-lavender); text-shadow: 0 4px 20px rgba(0,0,0,0.5);">Franz</h2>
             <p class="sans" style="margin-top: 2.5rem; margin-bottom: 1rem; letter-spacing: 0.1em; font-size: 0.85rem; text-transform: uppercase; text-shadow: 0 2px 10px rgba(0,0,0,0.5);">You are invited.</p>
-            <!-- Updated button to go to 'welcome' first -->
+            <!-- FLOW UPDATE 1: Enters directly to the Welcome message -->
             <button class="btn-glass" onclick="nav('welcome')">Enter &rarr;</button>
         </div>
     </section>
 
-    <!-- 02 WELCOME NOTE (Daytime Scene) -->
+    <!-- 02 WELCOME NOTE (Daytime Scene with Glass Box) -->
     <section id="welcome" class="screen">
         <div class="bg-layer"></div>
-        <div class="overlay overlay-light"></div>
-        <button class="back-btn" onclick="nav('menu')">&larr; Menu</button>
         
-        <div class="content-wrap">
+        <div class="content-wrap content-box-light">
             <h2 class="script" style="color: var(--lavender); margin-bottom: 2rem;">Finally, 18! ✨</h2>
             <p class="sans detail-text">It feels crazy to think that 18 years have already passed. From little moments to big memories, every year has been part of the story that brought me here.</p>
             <p class="sans detail-text">Now, a new part of my story begins—and I’d love to celebrate it with you.</p>
             <p class="serif" style="font-size: 1.25rem; font-style: italic; color: var(--charcoal); margin-top: 2rem;">Come celebrate, have fun,<br>and make a memory with me!</p>
             
-            <!-- New Continue Button -->
+            <!-- FLOW UPDATE 2: Continue button opens the menu -->
             <button class="btn-glass btn-colored" style="margin-top: 3rem;" onclick="nav('menu')">Continue &rarr;</button>
         </div>
     </section>
 
-    <!-- 03 MAIN MENU (Night Scene, Light Glass Overlay) -->
+    <!-- 03 MAIN MENU (Night Scene with Glass Box) -->
     <section id="menu" class="screen">
         <div class="bg-layer"></div>
-        <div class="overlay overlay-light"></div>
         
-        <div class="content-wrap">
+        <div class="content-wrap content-box-light">
             <h2 class="serif" style="font-size: 2.5rem; color: var(--charcoal);">eighteen.</h2>
             <h3 class="script" style="color: var(--lavender); margin-top: -10px;">Franz</h3>
-            <p class="sans detail-text" style="margin-top: 1rem; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em;">Explore the evening</p>
+            <p class="sans detail-text" style="margin-top: 1rem; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0;">Explore the evening</p>
             
             <div class="menu-list">
-                <button class="menu-item" onclick="nav('welcome')">WELCOME<span class="menu-sub">A little note</span></button>
+                <!-- FLOW UPDATE 3: Welcome is removed from here since they already saw it -->
                 <button class="menu-item" onclick="nav('evening')">THE EVENING<span class="menu-sub">When & Where</span></button>
                 <button class="menu-item" onclick="nav('dress-code')">DRESS CODE<span class="menu-sub">What to wear</span></button>
                 <button class="menu-item" onclick="nav('roses')">18 ROSES<span class="menu-sub">Oh, this one's for you</span></button>
@@ -163,13 +174,12 @@
         </div>
     </section>
 
-    <!-- 04 THE EVENING (Daytime Scene) -->
+    <!-- 04 THE EVENING -->
     <section id="evening" class="screen">
         <div class="bg-layer"></div>
-        <div class="overlay overlay-light"></div>
         <button class="back-btn" onclick="nav('menu')">&larr; Menu</button>
         
-        <div class="content-wrap">
+        <div class="content-wrap content-box-light">
             <p class="label">The Evening</p>
             <h2 class="serif" style="font-size: 2.5rem; margin-bottom: 1rem; color: var(--lavender);">September 27, 2026<br>6:00 PM</h2>
             <p class="sans detail-text">The Felicidad Mansion<br>#2 Baler Street corner Roosevelt Ave<br>San Francisco del Monte, Quezon City</p>
@@ -177,13 +187,12 @@
         </div>
     </section>
 
-    <!-- 05 DRESS CODE (Daytime Scene) -->
+    <!-- 05 DRESS CODE -->
     <section id="dress-code" class="screen">
         <div class="bg-layer"></div>
-        <div class="overlay overlay-light"></div>
         <button class="back-btn" onclick="nav('menu')">&larr; Menu</button>
 
-        <div class="content-wrap">
+        <div class="content-wrap content-box-light">
             <p class="label">Dress Code</p>
             <h2 class="serif huge" style="margin-bottom: 1rem; color: var(--lavender);">WHITE.</h2>
             <p class="serif" style="font-size: 1.5rem; font-style: italic; margin-bottom: 2rem; color: var(--charcoal);">Formal / Semi-formal</p>
@@ -192,15 +201,14 @@
         </div>
     </section>
 
-    <!-- 06 18 ROSES (Daytime Scene, Dark Overlay for a twilight feel) -->
+    <!-- 06 18 ROSES (Dark Box to match Night Scene) -->
     <section id="roses" class="screen">
         <div class="bg-layer"></div>
-        <div class="overlay overlay-dark"></div>
-        <button class="back-btn light" onclick="nav('menu')">&larr; Menu</button>
+        <button class="back-btn" onclick="nav('menu')">&larr; Menu</button>
 
-        <div class="content-wrap" style="color: var(--white);">
+        <div class="content-wrap content-box-dark">
             <h3 class="script" style="margin-bottom: 1rem; color: var(--light-lavender);">Oh, this one's for you.</h3>
-            <p class="sans detail-text" style="color: var(--white);">You're part of my 18 Roses,<br>and I'm really happy you'll be<br>sharing this moment with me.</p>
+            <p class="sans" style="font-size: 0.95rem; line-height: 1.8; margin-bottom: 1.5rem;">You're part of my 18 Roses,<br>and I'm really happy you'll be<br>sharing this moment with me.</p>
             
             <div class="rose-card" onclick="toggleRose()">
                 <div style="display: flex; justify-content: space-between; align-items: center;">
@@ -234,30 +242,28 @@
         </div>
     </section>
 
-    <!-- 07 COUNTDOWN (Daytime Scene) -->
+    <!-- 07 COUNTDOWN -->
     <section id="countdown" class="screen">
         <div class="bg-layer"></div>
-        <div class="overlay overlay-light"></div>
         <button class="back-btn" onclick="nav('menu')">&larr; Menu</button>
 
-        <div class="content-wrap">
+        <div class="content-wrap content-box-light">
             <p class="label">Until the Night</p>
             <div class="countdown-flex">
-                <div><div class="serif cd-num" id="days">00</div><div class="sans" style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em;">Days</div></div>
-                <div><div class="serif cd-num" id="hours">00</div><div class="sans" style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em;">Hours</div></div>
-                <div><div class="serif cd-num" id="mins">00</div><div class="sans" style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em;">Mins</div></div>
-                <div><div class="serif cd-num" id="secs">00</div><div class="sans" style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em;">Secs</div></div>
+                <div><div class="serif cd-num" id="days">00</div><div class="sans" style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--charcoal);">Days</div></div>
+                <div><div class="serif cd-num" id="hours">00</div><div class="sans" style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--charcoal);">Hours</div></div>
+                <div><div class="serif cd-num" id="mins">00</div><div class="sans" style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--charcoal);">Mins</div></div>
+                <div><div class="serif cd-num" id="secs">00</div><div class="sans" style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--charcoal);">Secs</div></div>
             </div>
         </div>
     </section>
 
-    <!-- 08 RSVP (Daytime Scene) -->
+    <!-- 08 RSVP -->
     <section id="rsvp" class="screen">
         <div class="bg-layer"></div>
-        <div class="overlay overlay-light"></div>
         <button class="back-btn" onclick="nav('menu')">&larr; Menu</button>
 
-        <div class="content-wrap">
+        <div class="content-wrap content-box-light">
             <h2 class="serif" style="font-size: 2.5rem; margin-bottom: 1rem; color: var(--lavender);">Will you be there?</h2>
             <p class="sans detail-text">Please confirm your attendance<br>by scanning below before Sept 10.</p>
             
