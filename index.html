@@ -4,10 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Franz — Eighteen</title>
-    <meta property="og:title" content="Franz @18 — 18 Roses">
-<meta property="og:description" content="September 27, 2026">
-<meta property="og:url" content="https://andreaasuncion0928-sketch.github.io/Franz18roses/">
-<meta property="og:type" content="website">
     <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -118,10 +114,10 @@
         .countdown-flex { display: flex; gap: 1.2rem; justify-content: center; margin-top: 1.5rem; }
         .cd-num { font-size: 2rem; line-height: 1; margin-bottom: 0.5rem; color: var(--light-lavender); }
         
-        /* 18 Roses Card */
-        .rose-card { border: 1px solid rgba(255,255,255,0.4); background: rgba(255,255,255,0.1); padding: 1.5rem; margin-top: 1.5rem; cursor: pointer; text-align: left; color: var(--white); border-radius: 8px; }
-        .rose-content { display: none; padding-top: 1.2rem; margin-top: 1.2rem; border-top: 1px solid rgba(255,255,255,0.3); }
-        .rose-content.active { display: block; }
+        /* Interactive Card */
+        .interactive-card { border: 1px solid rgba(255,255,255,0.4); background: rgba(255,255,255,0.1); padding: 1.5rem; margin-top: 1.5rem; cursor: pointer; text-align: left; color: var(--white); border-radius: 8px; }
+        .interactive-content { display: none; padding-top: 1.2rem; margin-top: 1.2rem; border-top: 1px solid rgba(255,255,255,0.3); }
+        .interactive-content.active { display: block; }
     </style>
 </head>
 <body>
@@ -130,7 +126,6 @@
 
     <!-- Hidden Audio Player -->
     <audio id="bgMusic" loop>
-        <!-- The file must be named song.mp3 in your GitHub folder -->
         <source src="song.mp3" type="audio/mpeg">
     </audio>
 
@@ -143,7 +138,9 @@
             <h1 class="serif huge" style="margin-bottom: -0.5rem; text-shadow: 0 4px 20px rgba(0,0,0,0.7);">eighteen.</h1>
             <h2 class="script" style="color: var(--light-lavender); text-shadow: 0 4px 20px rgba(0,0,0,0.7);">Franz</h2>
             <p class="sans" style="margin-top: 2rem; margin-bottom: 1rem; letter-spacing: 0.1em; font-size: 0.8rem; text-transform: uppercase; text-shadow: 0 2px 10px rgba(0,0,0,0.7);">You are invited.</p>
-            <button class="btn-glass" onclick="nav('welcome')">Enter &rarr;</button>
+            
+            <!-- CHANGED: Click this to play music AND enter the site -->
+            <button class="btn-glass" onclick="enterAndPlay()">🎵 Play my favorite song</button>
         </div>
     </section>
 
@@ -158,7 +155,7 @@
             <p class="sans detail-text">It feels crazy to think that 18 years have already passed. From little moments to big memories, every year has been part of the story that brought me here.</p>
             <p class="sans detail-text">Now, a new part of my story begins—and I’d love to celebrate it with you.</p>
             
-            <!-- Music Player Button -->
+            <!-- Music Player Button - will automatically say Pause if playing -->
             <button id="musicBtn" class="btn-glass btn-music" onclick="toggleMusic()">🎵 Play my favorite song</button>
             
             <p class="serif" style="font-size: 1.1rem; font-style: italic; color: var(--white); margin-top: 1.5rem; font-weight: bold;">Come celebrate, have fun,<br>and make a memory with me!</p>
@@ -310,12 +307,26 @@
         function toggleMusic() {
             if (isPlaying) {
                 bgMusic.pause();
-                musicBtn.innerHTML = "🎵 Play my favorite song";
+                if(musicBtn) musicBtn.innerHTML = "🎵 Play my favorite song";
             } else {
-                bgMusic.play();
-                musicBtn.innerHTML = "⏸ Pause song";
+                let playPromise = bgMusic.play();
+                if (playPromise !== undefined) {
+                    playPromise.then(_ => {
+                        if(musicBtn) musicBtn.innerHTML = "⏸ Pause song";
+                    }).catch(error => {
+                        console.log("Audio failed to play:", error);
+                    });
+                }
             }
             isPlaying = !isPlaying;
+        }
+
+        // New function to play music AND enter the site seamlessly
+        function enterAndPlay() {
+            nav('welcome'); // Move screen instantly
+            if (!isPlaying) {
+                toggleMusic();
+            }
         }
 
         // Countdown Logic
