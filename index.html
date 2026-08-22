@@ -97,9 +97,6 @@
         .btn-colored { border-color: var(--light-lavender); color: var(--white); background: rgba(171, 133, 184, 0.4); }
         .btn-colored:hover { background: rgba(171, 133, 184, 0.7); }
 
-        /* Music Button Specific Tweaks */
-        .btn-music { padding: 8px 20px; font-size: 0.6rem; text-transform: none; letter-spacing: 0.1em; margin-top: 1rem; border-color: rgba(255,255,255,0.3); }
-
         /* Menu Elements */
         .menu-list { display: flex; flex-direction: column; gap: 1.2rem; margin-top: 1.5rem; }
         .menu-item { cursor: pointer; background: none; border: none; font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--white); }
@@ -139,12 +136,12 @@
             <h2 class="script" style="color: var(--light-lavender); text-shadow: 0 4px 20px rgba(0,0,0,0.7);">Franz</h2>
             <p class="sans" style="margin-top: 2rem; margin-bottom: 1rem; letter-spacing: 0.1em; font-size: 0.8rem; text-transform: uppercase; text-shadow: 0 2px 10px rgba(0,0,0,0.7);">You are invited.</p>
             
-            <!-- CHANGED: Click this to play music AND enter the site -->
+            <!-- Click this to play music AND enter the site -->
             <button class="btn-glass" onclick="enterAndPlay()">🎵 Play my favorite song</button>
         </div>
     </section>
 
-    <!-- 02 WELCOME NOTE & MUSIC BUTTON -->
+    <!-- 02 WELCOME NOTE -->
     <section id="welcome" class="screen">
         <div class="bg-layer"></div>
         <div class="overlay-60"></div>
@@ -155,10 +152,7 @@
             <p class="sans detail-text">It feels crazy to think that 18 years have already passed. From little moments to big memories, every year has been part of the story that brought me here.</p>
             <p class="sans detail-text">Now, a new part of my story begins—and I’d love to celebrate it with you.</p>
             
-            <!-- Music Player Button - will automatically say Pause if playing -->
-            <button id="musicBtn" class="btn-glass btn-music" onclick="toggleMusic()">🎵 Play my favorite song</button>
-            
-            <p class="serif" style="font-size: 1.1rem; font-style: italic; color: var(--white); margin-top: 1.5rem; font-weight: bold;">Come celebrate, have fun,<br>and make a memory with me!</p>
+            <p class="serif" style="font-size: 1.1rem; font-style: italic; color: var(--white); margin-top: 2rem; font-weight: bold;">Come celebrate, have fun,<br>and make a memory with me!</p>
             
             <button class="btn-glass btn-colored" style="margin-top: 1.5rem;" onclick="nav('menu')">Continue &rarr;</button>
         </div>
@@ -302,18 +296,14 @@
         // Music Play/Pause Logic
         let isPlaying = false;
         const bgMusic = document.getElementById('bgMusic');
-        const musicBtn = document.getElementById('musicBtn');
 
         function toggleMusic() {
             if (isPlaying) {
                 bgMusic.pause();
-                if(musicBtn) musicBtn.innerHTML = "🎵 Play my favorite song";
             } else {
                 let playPromise = bgMusic.play();
                 if (playPromise !== undefined) {
-                    playPromise.then(_ => {
-                        if(musicBtn) musicBtn.innerHTML = "⏸ Pause song";
-                    }).catch(error => {
+                    playPromise.catch(error => {
                         console.log("Audio failed to play:", error);
                     });
                 }
@@ -321,7 +311,7 @@
             isPlaying = !isPlaying;
         }
 
-        // New function to play music AND enter the site seamlessly
+        // Play music AND enter the site seamlessly
         function enterAndPlay() {
             nav('welcome'); // Move screen instantly
             if (!isPlaying) {
